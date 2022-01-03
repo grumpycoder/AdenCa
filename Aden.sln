@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aden.WebUI", "src\Aden.WebUI\Aden.WebUI.csproj", "{0798A024-0E63-4093-8868-C56F157930B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0798A024-0E63-4093-8868-C56F157930B3} = {7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0798A024-0E63-4093-8868-C56F157930B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0798A024-0E63-4093-8868-C56F157930B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0798A024-0E63-4093-8868-C56F157930B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0798A024-0E63-4093-8868-C56F157930B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
