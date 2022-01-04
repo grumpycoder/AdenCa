@@ -1,9 +1,13 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Aden.WebUI.Persistence;
 using DateOnlyTimeOnly.AspNet.Converters;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // Add services to the container.
 builder.Services.AddRazorPages();

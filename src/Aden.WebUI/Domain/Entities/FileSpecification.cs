@@ -1,8 +1,9 @@
-﻿using Aden.WebUI.ValueObjects;
+﻿using Aden.WebUI.Domain.ValueObjects;
+using MediatR;
 
 namespace Aden.WebUI.Domain.Entities;
 
-public class FileSpecification
+public class FileSpecification : IRequest<Unit>
 {
     public int Id { get; set; }
     public string FileNumber { get; set; }

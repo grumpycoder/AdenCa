@@ -33,5 +33,9 @@ public class SubmissionsController: ControllerBase
         return Ok(list);
     }
 
-    
+    [HttpPut]
+    public async Task<ActionResult> Put()
+    {
+        return Ok();
+    }
 }

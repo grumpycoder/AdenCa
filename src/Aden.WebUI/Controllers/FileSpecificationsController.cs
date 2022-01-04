@@ -1,6 +1,7 @@
-﻿using Aden.WebUI.Persistence;
+﻿using Aden.WebUI.Application.FileSpecification.Queries;
+using Aden.WebUI.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Aden.WebUI.Controllers;
 
@@ -10,18 +11,20 @@ public class FileSpecificationsController: ControllerBase
 {
     private readonly ILogger<FileSpecificationsController> _logger;
     private readonly ApplicationDbContext _context;
+    private readonly IMediator _mediator;
 
-    public FileSpecificationsController(ILogger<FileSpecificationsController> logger, ApplicationDbContext context)
+    public FileSpecificationsController(ILogger<FileSpecificationsController> logger, ApplicationDbContext context, IMediator mediator)
     {
         _logger = logger;
         _context = context;
+        _mediator = mediator;
     }
     
     [HttpGet]
     [Route("{id:int}")]
     public async Task<ActionResult> Get([FromRoute] int id, CancellationToken token = new())
     {
-        var entity = await _context.FileSpecifications.FindAsync(id);
+        var entity = await _mediator.Send(new GetFileSpecificationByIdQuery(id));
         return Ok(entity);
     }
     
@@ -29,7 +32,7 @@ public class FileSpecificationsController: ControllerBase
     [Route("")]
     public async Task<ActionResult> Get(CancellationToken token = new())
     {
-        var list = await _context.FileSpecifications.ToListAsync(cancellationToken: token);
+        var list = await _mediator.Send(new GetAllFileSpecificationsQuery(), token);
         return Ok(list);
     }
     

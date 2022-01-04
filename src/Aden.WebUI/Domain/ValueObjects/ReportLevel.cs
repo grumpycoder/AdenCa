@@ -1,4 +1,4 @@
-﻿namespace Aden.WebUI.ValueObjects;
+﻿namespace Aden.WebUI.Domain.ValueObjects;
 
 public record ReportLevel
 {
