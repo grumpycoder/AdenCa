@@ -15,8 +15,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         {
             { typeof(ValidationException), HandleValidationException },
             { typeof(NotFoundException), HandleNotFoundException },
-            { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
-            { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+            // { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
+            // { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
         };
     }
 
@@ -36,7 +36,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             return;
         }
 
-        if (context.ModelState.IsValid)
+        if (!context.ModelState.IsValid)
         {
             HandleInvalidModelStateException(context);
             return;

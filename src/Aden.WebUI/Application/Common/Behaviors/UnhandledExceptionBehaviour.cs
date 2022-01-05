@@ -1,12 +1,12 @@
 ﻿using MediatR;
 
-namespace Aden.WebUI.Application.Common.Behaviours;
+namespace Aden.WebUI.Application.Common.Behaviors;
 
-public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private readonly ILogger<TRequest> _logger;
 
-    public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
+    public UnhandledExceptionBehavior(ILogger<TRequest> logger)
     {
         _logger = logger;
     }

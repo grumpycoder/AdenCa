@@ -1,69 +1,13 @@
-using System.Reflection;
-using System.Text.Json.Serialization;
-using Aden.WebUI.Application.Common.Behaviours;
-using Aden.WebUI.Application.Interfaces;
-using Aden.WebUI.Filters;
-using Aden.WebUI.Persistence;
+using Aden.WebUI;
 using Aden.WebUI.SwaggerInfrastructure;
-using DateOnlyTimeOnly.AspNet.Converters;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-
-// builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddControllers(options => 
-    { options.Filters.Add<ApiExceptionFilterAttribute>(); })
-    .AddJsonOptions(
-    options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
-
-builder.Services.AddApiVersioning(options =>
-{
-    options.ReportApiVersions = true;
-    options.UseApiBehavior = true;
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.ApiVersionReader = ApiVersionReader.Combine(
-        new QueryStringApiVersionReader(), //defaults to "api-version"
-        new QueryStringApiVersionReader("v"),
-        new HeaderApiVersionReader("api-version"),
-        new HeaderApiVersionReader("v"),
-        new MediaTypeApiVersionReader(), //defaults to "v"
-        new MediaTypeApiVersionReader("api-version"));
-});
-
-builder.Services.AddVersionedApiExplorer(
-    options =>
-    {
-        // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
-        // note: the specified format code will format the version as "'v'major[.minor][-status]"
-        options.GroupNameFormat = "'v'VVV";
-        // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-        // can also be used to control the format of the API version in route templates
-        options.SubstituteApiVersionInUrl = true;
-    });
+builder.Services.AddMvcDependencyInjection();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -83,12 +27,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
 
 var app = builder.Build();
 
