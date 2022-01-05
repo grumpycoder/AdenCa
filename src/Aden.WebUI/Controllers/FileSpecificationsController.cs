@@ -1,6 +1,6 @@
 ﻿using Aden.WebUI.Application.FileSpecification.Commands;
+using Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
 using Aden.WebUI.Application.FileSpecification.Queries;
-using Aden.WebUI.Domain.Entities;
 using Aden.WebUI.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +24,7 @@ public class FileSpecificationsController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{id:int}", Name = "GetFileSpecificationById")]
-    [Route("{id:int}")]
+    [Route("{id:int}", Name = nameof(GetFileSpecificationById))]
     public async Task<ActionResult> GetFileSpecificationById([FromRoute] int id, CancellationToken token = new())
     {
         var entity = await _mediator.Send(new GetFileSpecificationByIdQuery(id), token);
@@ -44,22 +43,14 @@ public class FileSpecificationsController : ControllerBase
     public async Task<ActionResult> Post(CreateFileSpecificationCommand command)
     {
         var entity = await _mediator.Send(command);
-        // return new CreatedAtActionResult(nameof(GetFileSpecificationById), 
-        //     nameof(FileSpecificationsController), 
-        //     new { id = entity.Id }, 
-        //     entity);
-        
         return new CreatedAtRouteResult(nameof(GetFileSpecificationById), new { id = entity.Id }, entity);
-       
-        //return new CreatedAtRouteResult("GetFileSpecification", new { id = entity.Id }, entity);
-        //return new CreatedResult(nameof(FileSpecification), entity);
-        //return new CreatedAtRouteResult(nameof(FileSpecification), new { id = entity.Id}, entity); 
     }
 
     [HttpPut]
-    public async Task<ActionResult> Put(UpdateFileSpecificationCommand command)
+    public async Task<ActionResult> Put(UpdateFileSpecificationCommand command, CancellationToken token = new())
     {
-        var entity = _mediator.Send(command);
-        return new CreatedResult(nameof(FileSpecification), entity);
+
+            await _mediator.Send(command, token);
+            return new NoContentResult();
     }
 }

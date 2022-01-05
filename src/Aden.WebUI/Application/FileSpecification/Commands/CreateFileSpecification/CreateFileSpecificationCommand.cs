@@ -2,7 +2,7 @@
 using Aden.WebUI.Persistence;
 using MediatR;
 
-namespace Aden.WebUI.Application.FileSpecification.Commands;
+namespace Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
 
 public class CreateFileSpecificationCommand: IRequest<Domain.Entities.FileSpecification>
 {

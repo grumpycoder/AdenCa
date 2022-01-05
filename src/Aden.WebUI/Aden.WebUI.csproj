@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="DateOnlyTimeOnly.AspNet" Version="1.0.2" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
       <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
@@ -17,7 +18,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ValueObjects" />
+      <Compile Remove="Application\Interfaces\ICurrentUserService.cs" />
+      <Compile Remove="Services\CurrentUserService.cs" />
+      <Compile Remove="Application\Common\Behaviours\AuthorizationBehaviour.cs" />
+      <Compile Remove="Application\Common\Behaviours\LoggingBehaviour.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services" />
     </ItemGroup>
 
 </Project>
