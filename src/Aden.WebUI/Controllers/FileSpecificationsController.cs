@@ -1,9 +1,7 @@
-﻿using Aden.WebUI.Application.Common.Exceptions;
-using Aden.WebUI.Application.FileSpecification.Commands;
-using Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
+﻿using Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
+using Aden.WebUI.Application.FileSpecification.Commands.UpdateFileSpecification;
 using Aden.WebUI.Application.FileSpecification.Queries;
 using Aden.WebUI.Persistence;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,28 +42,15 @@ public class FileSpecificationsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post([FromBody]CreateFileSpecificationCommand command)
     {
-        
-        if (!ModelState.IsValid)
-        {
-            throw new ValidationException(new[] { new ValidationFailure("FileNumber", "Duplicate") }); 
-        }
         var entity = await _mediator.Send(command);
         return new CreatedAtRouteResult(nameof(GetFileSpecificationById), new { id = entity.Id }, entity);
     }
 
     [HttpPut]
-    public async Task<ActionResult> Put(UpdateFileSpecificationCommand command, CancellationToken token = new())
+    public async Task<ActionResult> Put(UpdateFileSpecificationCommand command)
     {
-        // if (ModelState.IsValid)
-        // {
-        //     throw new ValidationException(new[]
-        //     {
-        //         new ValidationFailure("FileNumber", "Duplicate file number")
-        //     });
-        // }
-
-        await _mediator.Send(command, token);
-        return new NoContentResult();
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
     
 }

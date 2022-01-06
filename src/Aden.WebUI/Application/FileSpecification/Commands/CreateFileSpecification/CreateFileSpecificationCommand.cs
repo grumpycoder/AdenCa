@@ -1,4 +1,5 @@
-﻿using Aden.WebUI.Domain.ValueObjects;
+﻿using Aden.WebUI.Application.Common.Exceptions;
+using Aden.WebUI.Domain.ValueObjects;
 using Aden.WebUI.Persistence;
 using MediatR;
 
@@ -24,6 +25,8 @@ public class CreateFileSpecificationCommandHandler: IRequestHandler<CreateFileSp
     
     public async Task<Domain.Entities.FileSpecification> Handle(CreateFileSpecificationCommand request, CancellationToken cancellationToken)
     {
+        throw new NotFoundException(nameof(FileSpecification), 500);
+        
         var entity = new Domain.Entities.FileSpecification()
         {
             Id = 500,

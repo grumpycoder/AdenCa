@@ -2,13 +2,13 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
+namespace Aden.WebUI.Application.FileSpecification.Commands.UpdateFileSpecification;
 
-public class CreateFileSpecificationCommandValidator: AbstractValidator<CreateFileSpecificationCommand>
+public class UpdateFileSpecificationCommandValidator: AbstractValidator<UpdateFileSpecificationCommand>
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateFileSpecificationCommandValidator(ApplicationDbContext context)
+    public UpdateFileSpecificationCommandValidator(ApplicationDbContext context)
     {
         _context = context;
 
@@ -22,10 +22,11 @@ public class CreateFileSpecificationCommandValidator: AbstractValidator<CreateFi
             .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
             .MustAsync(BeUniqueTitle).WithMessage("The specified file number already exists.");
     }
-
+    
     private async Task<bool> BeUniqueTitle(string fileNumber, CancellationToken cancellationToken)
     {
         return await _context.FileSpecifications
             .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
     }
+    
 }
