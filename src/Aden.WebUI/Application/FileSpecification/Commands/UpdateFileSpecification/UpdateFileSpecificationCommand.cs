@@ -1,4 +1,5 @@
 ﻿using Aden.WebUI.Application.Common.Exceptions;
+using Aden.WebUI.Domain.ValueObjects;
 using Aden.WebUI.Persistence;
 using MediatR;
 
@@ -12,6 +13,7 @@ public class UpdateFileSpecificationCommand : IRequest
     public bool IsSea { get; set; }
     public bool IsLea { get; set; }
     public bool IsSch { get; set; }
+    public bool IsRetired { get; set; }
 }
 
 public class UpdateFileSpecificationCommandHandler : IRequestHandler<UpdateFileSpecificationCommand>
@@ -31,6 +33,11 @@ public class UpdateFileSpecificationCommandHandler : IRequestHandler<UpdateFileS
             throw new NotFoundException(nameof(FileSpecification), request.Id);
         }
 
+        var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
+        entity.Update(request.FileNumber, request.FileNumber, reportLevel);
+
+        if(request.IsRetired) entity.Retire();
+        
         return Unit.Value;
     }
 }

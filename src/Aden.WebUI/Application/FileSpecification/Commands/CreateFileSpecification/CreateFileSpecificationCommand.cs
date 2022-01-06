@@ -25,15 +25,16 @@ public class CreateFileSpecificationCommandHandler: IRequestHandler<CreateFileSp
     
     public async Task<Domain.Entities.FileSpecification> Handle(CreateFileSpecificationCommand request, CancellationToken cancellationToken)
     {
-        throw new NotFoundException(nameof(FileSpecification), 500);
-        
-        var entity = new Domain.Entities.FileSpecification()
-        {
-            Id = 500,
-            Filename = request.Filename,
-            FileNumber = request.FileNumber,
-            ReportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch)
-        };
+        //throw new NotFoundException(nameof(FileSpecification), 500);
+
+        var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
+        var entity = new Domain.Entities.FileSpecification(request.FileNumber, request.Filename, reportLevel); 
+        // {
+        //     Id = 500,
+        //     Filename = request.Filename,
+        //     FileNumber = request.FileNumber,
+        //     ReportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch)
+        // };
 
         return entity; 
     }
