@@ -13,44 +13,18 @@ public static class MvcDependencyInjection
 {
     public static IServiceCollection AddMvcDependencyInjection(this IServiceCollection services)
     {
-        services.AddControllersWithViews(options =>
+        services
+            .AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation(x =>
-                //x.AutomaticValidationEnabled = false 
                 x.RegisterValidatorsFromAssemblyContaining<CreateFileSpecificationCommand>()
-            )
-            .AddJsonOptions(
+            ).AddJsonOptions(
                 options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                })
-            .ConfigureApiBehaviorOptions(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-                //options.InvalidModelStateResponseFactory = ModelStateValidator.ValidateModelState;
-            });;
-
-        // services
-        //     .AddControllersWithViews(options => { options.Filters.Add<ApiExceptionFilterAttribute>(); })
-        //     .AddFluentValidation(options =>
-        //         //options.RegisterValidatorsFromAssemblyContaining<CreateFileSpecificationCommandValidator>() 
-        //         options.RegisterValidatorsFromAssemblyContaining<UpdateFileSpecificationCommandValidator>()
-        //         //x.RegisterValidatorsFromAssemblyContaining<UpdateFileSpecificationCommandValidator>()
-        //         //x.RegisterValidatorsFromAssemblyContaining<Aden.WebUI.Application>()
-        //         //x.AutomaticValidationEnabled = false
-        //     )
-        //     .AddJsonOptions(
-        //         options =>
-        //         {
-        //             options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-        //             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        //         })
-        //     .ConfigureApiBehaviorOptions(options =>
-        //     {
-        //         //options.SuppressModelStateInvalidFilter = true;
-        //         //options.InvalidModelStateResponseFactory = ModelStateValidator.ValidateModelState;
-        //     });
+                }
+            ).ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
 
         services.AddRazorPages();
 

@@ -20,12 +20,19 @@ public class CreateFileSpecificationCommandValidator: AbstractValidator<CreateFi
             .NotEmpty().WithMessage("File Number is required.")
             .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
             .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
-            .MustAsync(BeUniqueTitle).WithMessage("The specified file number already exists.");
+            //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
+            .Must(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
     }
 
-    private async Task<bool> BeUniqueTitle(string fileNumber, CancellationToken cancellationToken)
+    private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
     {
         return await _context.FileSpecifications
             .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
+    }
+    
+    private bool BeUniqueFileNumber(string fileNumber)
+    {
+        return  _context.FileSpecifications
+            .All(l => l.FileNumber != fileNumber);
     }
 }

@@ -6,18 +6,19 @@ namespace Aden.WebUI.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
+
     private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 
     public ApiExceptionFilterAttribute()
     {
         // Register known exception types and handlers.
         _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
-        {
-            { typeof(ValidationException), HandleValidationException },
-            { typeof(NotFoundException), HandleNotFoundException },
-            // { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
-            // { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
-        };
+            {
+                { typeof(ValidationException), HandleValidationException },
+                { typeof(NotFoundException), HandleNotFoundException },
+                // { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
+                // { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+            };
     }
 
     public override void OnException(ExceptionContext context)
@@ -127,7 +128,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         {
             Status = StatusCodes.Status500InternalServerError,
             Title = "An error occurred while processing your request.",
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1"
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1", 
+            Detail = context.Exception.Message
         };
 
         context.Result = new ObjectResult(details)
