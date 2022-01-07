@@ -1,7 +1,7 @@
-﻿using Aden.WebUI.Application.FileSpecification.Commands.CreateFileSpecification;
-using Aden.WebUI.Application.FileSpecification.Commands.UpdateFileSpecification;
-using Aden.WebUI.Application.FileSpecification.Queries;
-using Aden.WebUI.Persistence;
+﻿using Aden.Application.FileSpecification.Commands.CreateFileSpecification;
+using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
+using Aden.Application.FileSpecification.Queries;
+using Aden.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,14 +38,14 @@ public class FileSpecificationsController : ControllerBase
         var list = await _mediator.Send(new GetAllFileSpecificationsQuery(), token);
         return Ok(list);
     }
-
+    
     [HttpPost]
     public async Task<ActionResult> Post([FromBody]CreateFileSpecificationCommand command)
     {
         var entity = await _mediator.Send(command);
         return new CreatedAtRouteResult(nameof(GetFileSpecificationById), new { id = entity.Id }, entity);
     }
-
+    
     [HttpPut]
     public async Task<ActionResult> Put(UpdateFileSpecificationCommand command)
     {

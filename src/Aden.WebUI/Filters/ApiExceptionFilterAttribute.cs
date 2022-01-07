@@ -1,4 +1,4 @@
-﻿using Aden.WebUI.Application.Common.Exceptions;
+﻿using Aden.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

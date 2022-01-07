@@ -23,10 +23,29 @@
       <Compile Remove="Services\CurrentUserService.cs" />
       <Compile Remove="Application\Common\Behaviours\AuthorizationBehaviour.cs" />
       <Compile Remove="Application\Common\Behaviours\LoggingBehaviour.cs" />
+      <Compile Remove="Application\**" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Services" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aden.Application\Aden.Application.csproj" />
+      <ProjectReference Include="..\Aden.Domain\Aden.Domain.csproj" />
+      <ProjectReference Include="..\Aden.Infrastructure\Aden.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Application\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Application\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Application\**" />
     </ItemGroup>
 
 </Project>
