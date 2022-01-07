@@ -1,6 +1,5 @@
 ﻿using Aden.WebUI.Persistence;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 
 namespace Aden.WebUI.Application.FileSpecification.Commands.UpdateFileSpecification;
 
@@ -20,20 +19,31 @@ public class UpdateFileSpecificationCommandValidator: AbstractValidator<UpdateFi
             .NotEmpty().WithMessage("File Number is required.")
             .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
             .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
-            //.MustAsync(BeUniqueTitle).WithMessage("The specified file number already exists.")
-            .Must(BeUniqueFileNumber).WithMessage("The specified file number already exists");
+            //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.")
+            //.Must(BeUniqueFileNumber).WithMessage("The specified file number already exists")
+            .Must((model, fileNumber) => BeUniqueFileNumber(model.Id, fileNumber)).WithMessage($"The specified file number already exists");
     }
     
-    private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
+    private bool BeUniqueFileNumber(int id, string fileNumber)
     {
-        return await _context.FileSpecifications
-            .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
+        return _context.FileSpecifications.Any(x => x.FileNumber == fileNumber && x.Id == id) || _context.FileSpecifications.All(l => l.FileNumber != fileNumber);
     }
     
-    private bool BeUniqueFileNumber(string fileNumber)
-    {
-        return  _context.FileSpecifications
-            .All(l => l.FileNumber != fileNumber);
-    }
-    
+    // private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
+    // {
+    //     return await _context.FileSpecifications
+    //         .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
+    // }
+    //
+    // private bool BeUniqueFileNumber(string fileNumber)
+    // {
+    //     return  _context.FileSpecifications
+    //         .All(l => l.FileNumber != fileNumber);
+    // }
+    //
+    // private bool BeUniqueFileNumber2(string fileNumber, int id)
+    // {
+    //     return  _context.FileSpecifications
+    //         .All(l => l.FileNumber != fileNumber);
+    // }
 }
