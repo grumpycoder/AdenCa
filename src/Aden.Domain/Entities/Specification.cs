@@ -1,12 +1,12 @@
 ﻿namespace Aden.Domain.Entities;
 
-public class FileSpec
+public class Specification
 {
-    private FileSpec()
+    private Specification()
     {
     }
 
-    public FileSpec(string fileNumber, string filename, ReportLevel reportLevel)
+    public Specification(string fileNumber, string filename, ReportLevel reportLevel)
     {
         FileNumber = fileNumber;
         Filename = filename;

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aden.Infrastructure.Persistence.Configurations;
 
-public class FileSpecificationConfiguration : IEntityTypeConfiguration<FileSpec>
+public class FileSpecificationConfiguration : IEntityTypeConfiguration<Specification>
 {
-    public void Configure(EntityTypeBuilder<FileSpec> builder)
+    public void Configure(EntityTypeBuilder<Specification> builder)
     {
         builder.ToTable("FileSpecifications", schema: "Aden");
         builder.Property(p => p.Id).HasColumnName("FileSpecificationId");

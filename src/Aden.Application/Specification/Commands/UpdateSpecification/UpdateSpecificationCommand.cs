@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 
-public class UpdateFileSpecificationCommand : IRequest
+public class UpdateSpecificationCommand : IRequest
 {
     public int Id { get; set; }
     public string Filename { get; set; }
@@ -16,16 +16,16 @@ public class UpdateFileSpecificationCommand : IRequest
     public bool IsRetired { get; set; }
 }
 
-public class UpdateFileSpecificationCommandHandler : IRequestHandler<UpdateFileSpecificationCommand>
+public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecificationCommand>
 {
     private readonly ApplicationDbContext _context;
 
-    public UpdateFileSpecificationCommandHandler(ApplicationDbContext context)
+    public UpdateSpecificationCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Unit> Handle(UpdateFileSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateSpecificationCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.FileSpecifications.FindAsync(request.Id);
         if (entity == null)

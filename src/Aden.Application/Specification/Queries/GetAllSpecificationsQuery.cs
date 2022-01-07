@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.FileSpecification.Queries;
 
-public class GetAllFileSpecificationsQuery: IRequest<List<FileSpec>>
+public class GetAllSpecificationsQuery: IRequest<List<Specification>>
 {
     
 }
 
-public class GetAllFileSpecificationsQueryHandler : IRequestHandler<GetAllFileSpecificationsQuery, List<FileSpec>>
+public class GetAllSpecificationsQueryHandler : IRequestHandler<GetAllSpecificationsQuery, List<Specification>>
 {
     private readonly ApplicationDbContext _context;
-    public GetAllFileSpecificationsQueryHandler(ApplicationDbContext context)
+    public GetAllSpecificationsQueryHandler(ApplicationDbContext context)
     {
         _context = context;
     }
     
-    public async Task<List<FileSpec>> Handle(GetAllFileSpecificationsQuery request, CancellationToken cancellationToken)
+    public async Task<List<Specification>> Handle(GetAllSpecificationsQuery request, CancellationToken cancellationToken)
     {
         var list = await _context.FileSpecifications.AsNoTracking().ToListAsync(cancellationToken);
         return list; 

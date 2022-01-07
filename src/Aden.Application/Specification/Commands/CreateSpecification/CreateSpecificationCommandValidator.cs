@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.FileSpecification.Commands.CreateFileSpecification;
 
-public class CreateFileSpecificationCommandValidator: AbstractValidator<CreateFileSpecificationCommand>
+public class CreateSpecificationCommandValidator: AbstractValidator<CreateSpecificationCommand>
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateFileSpecificationCommandValidator(ApplicationDbContext context)
+    public CreateSpecificationCommandValidator(ApplicationDbContext context)
     {
         _context = context;
 

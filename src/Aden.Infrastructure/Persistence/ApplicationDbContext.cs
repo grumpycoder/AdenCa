@@ -11,7 +11,7 @@ public class ApplicationDbContext: DbContext
     {
     }
     
-    public DbSet<FileSpec> FileSpecifications { get; set; }
+    public DbSet<Specification> FileSpecifications { get; set; }
     public DbSet<Submission> Submissions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)

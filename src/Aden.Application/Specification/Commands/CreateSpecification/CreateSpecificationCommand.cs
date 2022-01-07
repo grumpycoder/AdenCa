@@ -1,11 +1,11 @@
-﻿using Aden.Domain;
+using Aden.Domain;
 using Aden.Domain.Entities;
 using Aden.Infrastructure.Persistence;
 using MediatR;
 
 namespace Aden.Application.FileSpecification.Commands.CreateFileSpecification;
 
-public class CreateFileSpecificationCommand: IRequest<FileSpec>
+public class CreateSpecificationCommand: IRequest<Specification>
 {
     public string Filename { get; set; }
     public string FileNumber { get; set; }
@@ -14,19 +14,19 @@ public class CreateFileSpecificationCommand: IRequest<FileSpec>
     public bool IsSch { get; set; }
 }
 
-public class CreateFileSpecificationCommandHandler: IRequestHandler<CreateFileSpecificationCommand, FileSpec>
+public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificationCommand, Specification>
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateFileSpecificationCommandHandler(ApplicationDbContext context)
+    public CreateSpecificationCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }
     
-    public async Task<FileSpec> Handle(CreateFileSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
     {
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
-        var entity = new FileSpec(request.FileNumber, request.Filename, reportLevel); 
+        var entity = new Specification(request.FileNumber, request.Filename, reportLevel); 
 
         return entity; 
     }

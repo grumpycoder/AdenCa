@@ -16,7 +16,7 @@ public static class MvcDependencyInjection
             .AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation(x =>
-                x.RegisterValidatorsFromAssemblyContaining<CreateFileSpecificationCommand>()
+                x.RegisterValidatorsFromAssemblyContaining<CreateSpecificationCommand>()
             )
             .AddJsonOptions(
                 options =>

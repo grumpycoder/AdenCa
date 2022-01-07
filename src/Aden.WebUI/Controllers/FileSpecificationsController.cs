@@ -27,7 +27,7 @@ public class FileSpecificationsController : ControllerBase
     [Route("{id:int}", Name = nameof(GetFileSpecificationById))]
     public async Task<ActionResult> GetFileSpecificationById([FromRoute] int id, CancellationToken token = new())
     {
-        var entity = await _mediator.Send(new GetFileSpecificationByIdQuery(id), token);
+        var entity = await _mediator.Send(new GetSpecificationByIdQuery(id), token);
         return Ok(entity);
     }
 
@@ -35,19 +35,19 @@ public class FileSpecificationsController : ControllerBase
     [Route("")]
     public async Task<ActionResult> Get(CancellationToken token = new())
     {
-        var list = await _mediator.Send(new GetAllFileSpecificationsQuery(), token);
+        var list = await _mediator.Send(new GetAllSpecificationsQuery(), token);
         return Ok(list);
     }
     
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody]CreateFileSpecificationCommand command)
+    public async Task<ActionResult> Post([FromBody]CreateSpecificationCommand command)
     {
         var entity = await _mediator.Send(command);
         return new CreatedAtRouteResult(nameof(GetFileSpecificationById), new { id = entity.Id }, entity);
     }
     
     [HttpPut]
-    public async Task<ActionResult> Put(UpdateFileSpecificationCommand command)
+    public async Task<ActionResult> Put(UpdateSpecificationCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

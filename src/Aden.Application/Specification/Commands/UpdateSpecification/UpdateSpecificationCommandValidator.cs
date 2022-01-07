@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 
-public class UpdateFileSpecificationCommandValidator: AbstractValidator<UpdateFileSpecificationCommand>
+public class UpdateSpecificationCommandValidator: AbstractValidator<UpdateSpecificationCommand>
 {
     private readonly ApplicationDbContext _context;
 
-    public UpdateFileSpecificationCommandValidator(ApplicationDbContext context)
+    public UpdateSpecificationCommandValidator(ApplicationDbContext context)
     {
         _context = context;
 
