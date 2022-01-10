@@ -5,16 +5,25 @@ using MediatR;
 
 namespace Aden.Application.FileSpecification.Commands.CreateFileSpecification;
 
-public class CreateSpecificationCommand: IRequest<Specification>
+public class CreateSpecificationCommand: IRequest<Domain.Entities.Specification>
 {
     public string Filename { get; set; }
     public string FileNumber { get; set; }
     public bool IsSea { get; set; }
     public bool IsLea { get; set; }
     public bool IsSch { get; set; }
+    
+    public string? Section { get;  set; }
+    public string? Application { get;  set; }
+    public string? SupportGroup { get;  set; }
+    public string? Collection { get;  set; }
+    public string? SpecificationUrl { get;  set; }
+    
+    public string? FilenameFormat { get;  set; }
+    public string? ReportAction { get;  set; }
 }
 
-public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificationCommand, Specification>
+public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificationCommand, Domain.Entities.Specification>
 {
     private readonly ApplicationDbContext _context;
 
@@ -23,11 +32,14 @@ public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificat
         _context = context;
     }
     
-    public async Task<Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
     {
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
-        var entity = new Specification(request.FileNumber, request.Filename, reportLevel); 
+        var entity = new Domain.Entities.Specification(request.FileNumber, request.Filename, reportLevel); 
 
+        entity.Update(request.FileNumber, request.Filename, reportLevel, request.Application, 
+            request.SupportGroup, request.Collection, request.SpecificationUrl, request.FilenameFormat, 
+            request.ReportAction);
         return entity; 
     }
 }

@@ -17,6 +17,12 @@ public class ApplicationDbContext: DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        // builder.Entity<Submission>()
+        //     .HasOne<Specification>(e => e.Specification)
+        //     .WithMany(g => g.Submissions)
+        //     .HasForeignKey("FileSpecificationId");
+        
     }
     
 }

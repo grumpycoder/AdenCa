@@ -14,6 +14,15 @@ public class UpdateSpecificationCommand : IRequest
     public bool IsLea { get; set; }
     public bool IsSch { get; set; }
     public bool IsRetired { get; set; }
+
+    public string? Section { get;  set; }
+    public string? Application { get;  set; }
+    public string? SupportGroup { get;  set; }
+    public string? Collection { get;  set; }
+    public string? SpecificationUrl { get;  set; }
+    
+    public string? FilenameFormat { get;  set; }
+    public string? ReportAction { get;  set; }
 }
 
 public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecificationCommand>
@@ -34,9 +43,13 @@ public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecifica
         }
 
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
-        entity.Update(request.FileNumber, request.FileNumber, reportLevel);
+        entity.Update(request.FileNumber, request.Filename, reportLevel, request.Application, 
+            request.SupportGroup, request.Collection, request.SpecificationUrl, request.FilenameFormat, 
+            request.ReportAction);
 
         if(request.IsRetired) entity.Retire();
+
+        await _context.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

@@ -2,9 +2,10 @@
 using Aden.Domain.Entities;
 using Aden.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.FileSpecification.Queries;
-public class GetSpecificationByIdQuery: IRequest<Specification>
+public class GetSpecificationByIdQuery: IRequest<Domain.Entities.Specification>
 {
     public int Id { get; }
 
@@ -14,7 +15,7 @@ public class GetSpecificationByIdQuery: IRequest<Specification>
     }
 }
 
-public class GetSpecificationByIdQueryHandler: IRequestHandler<GetSpecificationByIdQuery, Specification>
+public class GetSpecificationByIdQueryHandler: IRequestHandler<GetSpecificationByIdQuery, Domain.Entities.Specification>
 {
     private readonly ApplicationDbContext _context;
 
@@ -23,10 +24,12 @@ public class GetSpecificationByIdQueryHandler: IRequestHandler<GetSpecificationB
         _context = context;
     }
     
-    public async Task<Specification> Handle(GetSpecificationByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Specification> Handle(GetSpecificationByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.FileSpecifications.FindAsync(request.Id);
-        if(entity == null) throw new NotFoundException(nameof(Specification), request.Id);
+        var entity = await _context.FileSpecifications
+            .Include(x => x.Submissions)
+            .FirstAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+        if(entity == null) throw new NotFoundException(nameof(Domain.Entities.Specification), request.Id);
         
         return entity; 
     }

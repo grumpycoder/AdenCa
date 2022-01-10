@@ -21,7 +21,9 @@ public class SubmissionsController: ControllerBase
     [Route("{id:int}")]
     public async Task<ActionResult> Get([FromRoute] int id, CancellationToken token = new())
     {
-        var entity = await _context.Submissions.FindAsync(id);
+        var entity = await _context.Submissions
+            .Include(x => x.Specification)
+            .FirstAsync(x => x.Id == id, cancellationToken: token);
         return Ok(entity);
     }
     

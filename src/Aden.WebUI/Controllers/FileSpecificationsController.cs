@@ -53,4 +53,20 @@ public class FileSpecificationsController : ControllerBase
         return Ok(result);
     }
     
+    [HttpPost]
+    [Route("retire/{id:int}")]
+    public async Task<ActionResult> Retire([FromRoute] int id)
+    {
+        var result = await _mediator.Send(new RetireSpecificationCommand(id));
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("activate/{id:int}")]
+    public async Task<ActionResult> Activate([FromRoute] int id)
+    {
+        var result = await _mediator.Send(new ActivateSpecificationCommand(id));
+        return Ok(result);
+    }
+    
 }
