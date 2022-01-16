@@ -1,6 +1,4 @@
-﻿using Aden.Domain.Entities;
-
-namespace Aden.Domain;
+﻿namespace Aden.Domain.Entities;
 
 public class Submission
 {

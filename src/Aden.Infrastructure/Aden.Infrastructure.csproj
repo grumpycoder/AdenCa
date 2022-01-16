@@ -15,4 +15,12 @@
       <ProjectReference Include="..\Aden.Domain\Aden.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repositories" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Repositories\EfRepository.cs" />
+    </ItemGroup>
+
 </Project>

@@ -30,4 +30,13 @@ public static class ApplicationDbContextExtensions
             .FirstOrDefaultAsync(x => x.Id == specificationId)
             ;
     }
+    
+    public static async Task<Submission> SubmissionsWithSpecification(this ApplicationDbContext context,
+        int submissionId)
+    {
+        return await context.Submissions
+                .Include(s => s.Specification)
+                .FirstOrDefaultAsync(x => x.Id == submissionId)
+            ;
+    }
 }
