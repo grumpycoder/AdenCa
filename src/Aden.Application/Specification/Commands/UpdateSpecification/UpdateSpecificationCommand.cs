@@ -8,7 +8,7 @@ namespace Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 public class UpdateSpecificationCommand : IRequest
 {
     public int Id { get; set; }
-    public string Filename { get; set; }
+    public string Filename { get; init; }
     public string FileNumber { get; set; }
     public bool IsSea { get; set; }
     public bool IsLea { get; set; }
@@ -36,7 +36,7 @@ public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecifica
 
     public async Task<Unit> Handle(UpdateSpecificationCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.FileSpecifications.FindAsync(request.Id);
+        var entity = await _context.Specifications.FindAsync(request.Id);
         if (entity == null)
         {
             throw new NotFoundException(nameof(FileSpecification), request.Id);

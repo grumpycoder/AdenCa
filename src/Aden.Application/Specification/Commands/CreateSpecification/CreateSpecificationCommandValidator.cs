@@ -26,13 +26,13 @@ public class CreateSpecificationCommandValidator: AbstractValidator<CreateSpecif
 
     private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
     {
-        return await _context.FileSpecifications
+        return await _context.Specifications
             .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
     }
     
     private bool BeUniqueFileNumber(string fileNumber)
     {
-        return  _context.FileSpecifications
+        return  _context.Specifications
             .All(l => l.FileNumber != fileNumber);
     }
 }

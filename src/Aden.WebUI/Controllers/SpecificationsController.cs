@@ -1,6 +1,7 @@
 ﻿using Aden.Application.FileSpecification.Commands.CreateFileSpecification;
 using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 using Aden.Application.FileSpecification.Queries;
+using Aden.Application.Submission.Commands.CreateSubmission;
 using Aden.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aden.WebUI.Controllers;
 
 [ApiController]
-[Route("api/[controller]", Name = "FileSpecifications")]
-public class FileSpecificationsController : ControllerBase
+[Route("api/[controller]", Name = "Specifications")]
+public class SpecificationsController : ControllerBase
 {
-    private readonly ILogger<FileSpecificationsController> _logger;
+    private readonly ILogger<SpecificationsController> _logger;
     private readonly ApplicationDbContext _context;
     private readonly IMediator _mediator;
 
-    public FileSpecificationsController(ILogger<FileSpecificationsController> logger, ApplicationDbContext context,
+    public SpecificationsController(ILogger<SpecificationsController> logger, ApplicationDbContext context,
         IMediator mediator)
     {
         _logger = logger;
@@ -69,4 +70,11 @@ public class FileSpecificationsController : ControllerBase
         return Ok(result);
     }
     
+    [HttpPost]
+    [Route("{id:int}/submission")]
+    public async Task<ActionResult> AddSubmission([FromRoute]int id, CreateSubmissionCommand command, CancellationToken token = new())
+    {
+        var entity = await _mediator.Send(command, token);
+        return Ok(entity);
+    }
 }

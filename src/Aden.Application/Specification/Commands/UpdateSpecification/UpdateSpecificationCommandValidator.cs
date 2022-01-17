@@ -26,7 +26,7 @@ public class UpdateSpecificationCommandValidator: AbstractValidator<UpdateSpecif
     
     private bool BeUniqueFileNumber(int id, string fileNumber)
     {
-        return _context.FileSpecifications.Any(x => x.FileNumber == fileNumber && x.Id == id) || _context.FileSpecifications.All(l => l.FileNumber != fileNumber);
+        return _context.Specifications.Any(x => x.FileNumber == fileNumber && x.Id == id) || _context.Specifications.All(l => l.FileNumber != fileNumber);
     }
     
     // private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)

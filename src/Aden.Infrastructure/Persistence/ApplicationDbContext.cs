@@ -11,12 +11,13 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<Specification> FileSpecifications { get; set; }
+    public DbSet<Specification> Specifications { get; set; }
     public DbSet<Submission> Submissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
     }
 }
 
@@ -25,7 +26,7 @@ public static class ApplicationDbContextExtensions
     public static async Task<Specification> SpecificationWithSubmissions(this ApplicationDbContext context,
         int specificationId)
     {
-        return await context.FileSpecifications
+        return await context.Specifications
             .Include(s => s.Submissions)
             .FirstOrDefaultAsync(x => x.Id == specificationId)
             ;

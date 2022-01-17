@@ -1,6 +1,5 @@
 ﻿using Aden.Application.FileSpecification.Queries;
 using Aden.Application.Submission.Queries;
-using Aden.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +11,11 @@ namespace Aden.WebUI.Controllers;
 public class SubmissionsController: ControllerBase
 {
     private readonly ILogger<SubmissionsController> _logger;
-    private readonly ApplicationDbContext _context;
     private readonly IMediator _mediator;
 
-    public SubmissionsController(ILogger<SubmissionsController> logger, ApplicationDbContext context, IMediator mediator)
+    public SubmissionsController(ILogger<SubmissionsController> logger, IMediator mediator)
     {
         _logger = logger;
-        _context = context;
         _mediator = mediator;
     }
     
@@ -44,10 +41,4 @@ public class SubmissionsController: ControllerBase
         return Ok();
     }
 
-    [HttpPost]
-    [Route("{specificationId:int}")]
-    public async Task<ActionResult> AddSubmission(int specificationId)
-    {
-        return Ok(specificationId);
-    }
 }

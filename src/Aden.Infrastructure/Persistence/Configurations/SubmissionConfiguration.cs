@@ -16,7 +16,18 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
 
         builder.Property(p => p.DueDate).HasConversion<NullableDateOnlyConverter>()
             .HasColumnType("smalldatetime");
-
+        
+        builder
+            .Property(e => e.SubmissionState)
+            .HasColumnType("tinyint")
+            // .HasConversion(
+            //     v => v.ToString(),
+            //     v => (SubmissionState)Enum.Parse(typeof(SubmissionState), v))
+            .HasColumnName("SubmissionStateId")
+            .HasConversion(x => (int) x, x => (SubmissionState) x);
+            //.HasColumnType("tinyint")
+            ;
+        
         builder
             .HasOne<Specification>(e => e.Specification)
             .WithMany(g => g.Submissions)

@@ -5,10 +5,10 @@ using MediatR;
 
 namespace Aden.Application.FileSpecification.Commands.CreateFileSpecification;
 
-public class CreateSpecificationCommand: IRequest<Domain.Entities.Specification>
+public class CreateSpecificationCommand: IRequest<Specification>
 {
-    public string Filename { get; set; }
-    public string FileNumber { get; set; }
+    public string Filename { get; init; } = string.Empty; 
+    public string FileNumber { get; set; }= string.Empty;
     public bool IsSea { get; set; }
     public bool IsLea { get; set; }
     public bool IsSch { get; set; }
@@ -23,7 +23,7 @@ public class CreateSpecificationCommand: IRequest<Domain.Entities.Specification>
     public string? ReportAction { get;  set; }
 }
 
-public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificationCommand, Domain.Entities.Specification>
+public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificationCommand, Specification>
 {
     private readonly ApplicationDbContext _context;
 
@@ -32,14 +32,18 @@ public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificat
         _context = context;
     }
     
-    public async Task<Domain.Entities.Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
     {
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
-        var entity = new Domain.Entities.Specification(request.FileNumber, request.Filename, reportLevel); 
+        var entity = new Specification(request.FileNumber, request.Filename, reportLevel); 
 
         entity.Update(request.FileNumber, request.Filename, reportLevel, request.Application, 
             request.SupportGroup, request.Collection, request.SpecificationUrl, request.FilenameFormat, 
             request.ReportAction);
+
+        _context.Specifications.Add(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+        
         return entity; 
     }
 }

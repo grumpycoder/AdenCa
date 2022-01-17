@@ -26,7 +26,7 @@ public class GetSpecificationByIdQueryHandler: IRequestHandler<GetSpecificationB
     
     public async Task<Specification> Handle(GetSpecificationByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.FileSpecifications
+        var entity = await _context.Specifications
             .Include(x => x.Submissions)
             .FirstAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
         

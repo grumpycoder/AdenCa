@@ -64,4 +64,9 @@ public class Specification
         IsRetired = false; 
         //TODO: What to do when activating? 
     }
+
+    public void AddSubmission(Submission submission)
+    {
+        _submissions.Add(submission);
+    }
 }

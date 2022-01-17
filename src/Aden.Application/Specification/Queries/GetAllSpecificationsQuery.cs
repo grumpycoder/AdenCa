@@ -20,7 +20,10 @@ public class GetAllSpecificationsQueryHandler : IRequestHandler<GetAllSpecificat
     
     public async Task<List<Specification>> Handle(GetAllSpecificationsQuery request, CancellationToken cancellationToken)
     {
-        var list = await _context.FileSpecifications.AsNoTracking().ToListAsync(cancellationToken);
+        var list = await _context.Specifications
+            .Include(x => x.Submissions)
+            .AsNoTracking().ToListAsync(cancellationToken);
+         
         return list; 
     }
 }

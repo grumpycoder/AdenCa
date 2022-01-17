@@ -25,7 +25,7 @@ public class RetireSpecificationCommandHandler: IRequestHandler<RetireSpecificat
     
     public async Task<Unit> Handle(RetireSpecificationCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.FileSpecifications.FindAsync(request.Id);
+        var entity = await _context.Specifications.FindAsync(request.Id);
 
         if (entity == null) throw new NotFoundException(nameof(FileSpecification), request.Id); 
         
