@@ -41,4 +41,11 @@ public class SubmissionsController: ControllerBase
         return Ok();
     }
 
+    [HttpPost]
+    [Route("{id:int}/cancel")]
+    public async Task<ActionResult> CancelSubmission([FromRoute] int id, CancellationToken token = new())
+    {
+        
+        return Ok();
+    }
 }

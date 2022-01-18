@@ -34,22 +34,24 @@ public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecifica
         _context = context;
     }
 
-    public async Task<Unit> Handle(UpdateSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateSpecificationCommand request, CancellationToken token)
     {
         var entity = await _context.Specifications.FindAsync(request.Id);
-        if (entity == null)
-        {
-            throw new NotFoundException(nameof(FileSpecification), request.Id);
-        }
 
-        var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
-        entity.Update(request.FileNumber, request.Filename, reportLevel, request.Application, 
-            request.SupportGroup, request.Collection, request.SpecificationUrl, request.FilenameFormat, 
-            request.ReportAction);
+        if (entity == null)throw new NotFoundException(nameof(FileSpecification), request.Id);
 
-        if(request.IsRetired) entity.Retire();
+        var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        entity.Rename(request.FileNumber, request.Filename);
+        entity.UpdateReportProcessDetail(reportLevel, request.FilenameFormat);
+
+        entity.UpdateApplicationDetails(request.Application, request.SupportGroup, 
+            request.Collection, request.SpecificationUrl);
+
+        if (request.IsRetired != entity.IsRetired && request.IsRetired) entity.Retire();
+        if (request.IsRetired != entity.IsRetired && !request.IsRetired) entity.Activate();
+        
+        await _context.SaveChangesAsync(token);
         
         return Unit.Value;
     }

@@ -32,17 +32,18 @@ public class CreateSpecificationCommandHandler: IRequestHandler<CreateSpecificat
         _context = context;
     }
     
-    public async Task<Specification> Handle(CreateSpecificationCommand request, CancellationToken cancellationToken)
+    public async Task<Specification> Handle(CreateSpecificationCommand request, CancellationToken token)
     {
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch); 
         var entity = new Specification(request.FileNumber, request.Filename, reportLevel); 
 
-        entity.Update(request.FileNumber, request.Filename, reportLevel, request.Application, 
-            request.SupportGroup, request.Collection, request.SpecificationUrl, request.FilenameFormat, 
-            request.ReportAction);
+        entity.UpdateApplicationDetails(request.Application, request.SupportGroup, request.Collection, 
+            request.SpecificationUrl);
 
+        entity.UpdateReportProcessDetail(reportLevel, request.FilenameFormat);
+        
         _context.Specifications.Add(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(token);
         
         return entity; 
     }
