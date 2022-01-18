@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Aden.SharedKernal\Aden.SharedKernal.csproj" />
+    </ItemGroup>
+
 </Project>

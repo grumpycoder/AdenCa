@@ -28,9 +28,9 @@ public class CreateSubmissionCommandHandler : IRequestHandler<CreateSubmissionCo
             .Include(x => x.Submissions)
             .FirstAsync(x => x.Id == request.SpecificationId, cancellationToken: cancellationToken);
         
-        if(specification == null) throw new NotFoundException(nameof(Domain.Entities.Specification), request.SpecificationId);
+        if(specification == null) throw new NotFoundException(nameof(Specification), request.SpecificationId);
 
-        var submission = new Domain.Entities.Submission(request.DueDate, request.DataYear); 
+        var submission = new Aden.Domain.Entities.Submission(request.DueDate, request.DataYear); 
         
         specification.AddSubmission(submission);
         

@@ -1,6 +1,8 @@
-﻿namespace Aden.Domain.Entities;
+﻿using Aden.SharedKernal;
 
-public class Specification
+namespace Aden.Domain.Entities;
+
+public class Specification: DomainEntity
 {
     private Specification()
     {
@@ -13,8 +15,6 @@ public class Specification
         ReportLevel = reportLevel;
         IsRetired = false;
     }
-
-    public int Id { get; private set; }
     public string? FileNumber { get; private set; }
     public string? Filename { get; private set; }
     public ReportLevel? ReportLevel { get; private set; }

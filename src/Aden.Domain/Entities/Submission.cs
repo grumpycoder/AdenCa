@@ -1,6 +1,8 @@
-﻿namespace Aden.Domain.Entities;
+﻿using Aden.SharedKernal;
 
-public class Submission
+namespace Aden.Domain.Entities;
+
+public class Submission: DomainEntity
 {
     private Submission()
     {
@@ -14,7 +16,6 @@ public class Submission
         SubmissionState = SubmissionState.NotStarted; 
     }
     
-    public int Id { get; set; }
     public DateOnly? DueDate { get; private set; }
     public DateTime? SubmissionDate { get; private set; }
     public int DataYear { get; private set; }
