@@ -1,5 +1,6 @@
 using Aden.Application.Common.Exceptions;
 using Aden.Infrastructure.Persistence;
+using FluentValidation;
 using MediatR;
 
 namespace Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
@@ -27,7 +28,9 @@ public class RetireSpecificationCommandHandler: IRequestHandler<RetireSpecificat
     {
         var entity = await _context.Specifications.FindAsync(request.Id);
 
-        if (entity == null) throw new NotFoundException(nameof(FileSpecification), request.Id); 
+        if (entity == null) throw new NotFoundException(nameof(FileSpecification), request.Id);
+
+        if (entity.IsRetired) throw new BadRequestException("Specification is already retired"); 
         
         entity.Retire();
 

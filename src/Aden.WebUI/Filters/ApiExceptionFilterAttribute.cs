@@ -16,9 +16,26 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
+                { typeof(BadRequestException), HandleBadRequestException },
                 // { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 // { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
+    }
+
+    private void HandleBadRequestException(ExceptionContext context)
+    {
+        var exception = (BadRequestException)context.Exception;
+        
+        var details = new ProblemDetails()
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            Title = "Bad Request.",
+            Detail = exception.Message
+        };
+        
+        context.Result = new BadRequestObjectResult(details);
+
+        context.ExceptionHandled = true;
     }
 
     public override void OnException(ExceptionContext context)

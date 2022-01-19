@@ -29,7 +29,7 @@ public class Specification: DomainEntity
     public string? FilenameFormat { get; private set; }
     public string? ReportAction { get; private set; }
 
-    public bool? IsRetired { get; set; }
+    public bool IsRetired { get; set; }
 
     private readonly List<Submission> _submissions = new();
     public IEnumerable<Submission> Submissions => _submissions.AsReadOnly();
