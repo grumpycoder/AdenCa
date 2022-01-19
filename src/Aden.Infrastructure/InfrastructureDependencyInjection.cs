@@ -9,10 +9,15 @@ public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<DomainEventDispatcher>();
+
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
+            options
+                .AddInterceptors(services.BuildServiceProvider().GetService<DomainEventDispatcher>())
+                .UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection")
-            ));
+            )
+        );
 
 
         return services;

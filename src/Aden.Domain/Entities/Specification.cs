@@ -1,4 +1,5 @@
-﻿using Aden.SharedKernal;
+﻿using Aden.Domain.Events;
+using Aden.SharedKernal;
 
 namespace Aden.Domain.Entities;
 
@@ -58,6 +59,7 @@ public class Specification: DomainEntity
     {
         IsRetired = true;
         //TODO: Domain Event to cancel in progress work and notify
+        AddDomainEvents(new SpecificationRetired(){SpecificationId = Id});
     }
 
     public void Activate()
