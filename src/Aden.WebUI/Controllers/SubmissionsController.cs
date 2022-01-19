@@ -23,7 +23,7 @@ public class SubmissionsController: ControllerBase
     [Route("{id:int}")]
     public async Task<ActionResult> Get([FromRoute] int id, CancellationToken token = new())
     {
-        var entity = await _mediator.Send(new GetSubmissionByIdQuery(id), token);
+        var entity = await _mediator.Send(new GetSubmissionById.Query(id));
         return Ok(entity);
     }
     
@@ -31,7 +31,7 @@ public class SubmissionsController: ControllerBase
     [Route("")]
     public async Task<ActionResult> Get(CancellationToken token = new())
     {
-        var list = await _mediator.Send(new GetAllSubmissionsQuery(), token);
+        var list = await _mediator.Send(new GetAllSubmissions.Query(), token);
         return Ok(list);
     }
 
