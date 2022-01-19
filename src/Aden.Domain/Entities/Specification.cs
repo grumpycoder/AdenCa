@@ -40,18 +40,20 @@ public class Specification: DomainEntity
         FileNumber = fileNumber;
     }
 
-    public void UpdateReportProcessDetail(ReportLevel reportLevel, string filenameFormat)
+    public void UpdateReportProcessDetail(ReportLevel reportLevel, string filenameFormat, string reportAction)
     {
         ReportLevel = reportLevel;
-        FilenameFormat = filenameFormat; 
+        FilenameFormat = filenameFormat;
+        ReportAction = reportAction;
     }
 
     public void UpdateApplicationDetails(string application, string supportGroup, string collection,
-        string specificationUrl)
+        string section, string specificationUrl)
     {
         Application = application;
         SupportGroup = supportGroup;
         Collection = collection;
+        Section = section; 
         SpecificationUrl = specificationUrl;
     }
 

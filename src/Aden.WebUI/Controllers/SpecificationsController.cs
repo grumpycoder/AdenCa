@@ -1,6 +1,6 @@
-﻿using Aden.Application.FileSpecification.Commands.CreateFileSpecification;
-using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
+﻿using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 using Aden.Application.FileSpecification.Queries;
+using Aden.Application.Specification.Commands;
 using Aden.Application.Submission.Commands.CreateSubmission;
 using Aden.Infrastructure.Persistence;
 using MediatR;
@@ -41,8 +41,9 @@ public class SpecificationsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody]CreateSpecificationCommand command)
+    public async Task<ActionResult> Post([FromBody]CreateSpecification.Command command)
     {
+        
         var entity = await _mediator.Send(command);
         return new CreatedAtRouteResult(nameof(GetFileSpecificationById), new { id = entity.Id }, entity);
     }

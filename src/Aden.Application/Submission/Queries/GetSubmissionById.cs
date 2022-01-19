@@ -42,6 +42,6 @@ public static class GetSubmissionById
         public int DataYear { get;  set; }
 
         public SubmissionState SubmissionState { get;  set; }
-        public Specification Specification { get;  set; }
+        public Domain.Entities.Specification Specification { get;  set; }
     }
 }

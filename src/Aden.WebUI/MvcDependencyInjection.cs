@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Aden.Application.FileSpecification.Commands.CreateFileSpecification;
+using Aden.Application.Submission.Commands.CreateSubmission;
 using Aden.WebUI.Filters;
 using DateOnlyTimeOnly.AspNet.Converters;
 using FluentValidation.AspNetCore;
@@ -16,7 +16,7 @@ public static class MvcDependencyInjection
             .AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation(x =>
-                x.RegisterValidatorsFromAssemblyContaining<CreateSpecificationCommand>()
+                x.RegisterValidatorsFromAssemblyContaining<CreateSubmissionCommand>()
             )
             .AddJsonOptions(
                 options =>

@@ -43,10 +43,10 @@ public class UpdateSpecificationCommandHandler : IRequestHandler<UpdateSpecifica
         var reportLevel = new ReportLevel(request.IsSea, request.IsLea, request.IsSch);
 
         entity.Rename(request.FileNumber, request.Filename);
-        entity.UpdateReportProcessDetail(reportLevel, request.FilenameFormat);
+        entity.UpdateReportProcessDetail(reportLevel, request.FilenameFormat, request.ReportAction);
 
         entity.UpdateApplicationDetails(request.Application, request.SupportGroup, 
-            request.Collection, request.SpecificationUrl);
+            request.Collection, request.Section, request.SpecificationUrl);
 
         if (request.IsRetired != entity.IsRetired && request.IsRetired) entity.Retire();
         if (request.IsRetired != entity.IsRetired && !request.IsRetired) entity.Activate();

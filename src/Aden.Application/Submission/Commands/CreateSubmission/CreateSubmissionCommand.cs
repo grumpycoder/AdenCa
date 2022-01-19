@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.Submission.Commands.CreateSubmission;
 
-public class CreateSubmissionCommand: IRequest<Specification>
+public class CreateSubmissionCommand: IRequest<Domain.Entities.Specification>
 {
     public int SpecificationId { get; set; }
     public DateOnly DueDate { get; set; }
     public int DataYear { get; set; }
 }
 
-public class CreateSubmissionCommandHandler : IRequestHandler<CreateSubmissionCommand, Specification>
+public class CreateSubmissionCommandHandler : IRequestHandler<CreateSubmissionCommand, Domain.Entities.Specification>
 {
     private readonly ApplicationDbContext _context;
 
@@ -22,7 +22,7 @@ public class CreateSubmissionCommandHandler : IRequestHandler<CreateSubmissionCo
         _context = context;
     }
 
-    public async Task<Specification> Handle(CreateSubmissionCommand request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Specification> Handle(CreateSubmissionCommand request, CancellationToken cancellationToken)
     {
         var specification = await _context.Specifications
             .Include(x => x.Submissions)
