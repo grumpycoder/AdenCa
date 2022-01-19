@@ -23,8 +23,4 @@
       <Compile Remove="Specifications\SpecificationWithSubmissionsById.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Specification\Commands\CreateSpecification" />
-    </ItemGroup>
-
 </Project>

@@ -37,7 +37,7 @@ public static class CreateSpecification
             {
                 Id = entity.Id, 
                 FileNumber = entity.FileNumber, 
-                Filename = entity.Filename, 
+                FileName = entity.FileName, 
                 ReportLevel = entity.ReportLevel, 
                 Section = entity.Section, 
                 Application = entity.Application, 
@@ -90,7 +90,7 @@ public static class CreateSpecification
     {
         public int Id { get; set; }
         public string FileNumber { get;  set; }
-        public string Filename { get;  set; }
+        public string FileName { get;  set; }
         public ReportLevel ReportLevel { get;  set; }
 
         public string Section { get;  set; }

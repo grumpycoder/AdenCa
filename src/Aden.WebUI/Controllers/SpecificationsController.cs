@@ -2,6 +2,7 @@
 using Aden.Application.FileSpecification.Queries;
 using Aden.Application.Specification.Commands;
 using Aden.Application.Submission.Commands.CreateSubmission;
+using Aden.Domain.Events;
 using Aden.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,8 @@ public class SpecificationsController : ControllerBase
     [Route("{id:int}", Name = nameof(GetFileSpecificationById))]
     public async Task<ActionResult> GetFileSpecificationById([FromRoute] int id, CancellationToken token = new())
     {
+        _mediator.Publish(new SampleEvent("Hello from mediator event")); 
+        
         var entity = await _mediator.Send(new GetSpecificationByIdQuery(id), token);
         return Ok(entity);
     }
@@ -36,6 +39,7 @@ public class SpecificationsController : ControllerBase
     [Route("")]
     public async Task<ActionResult> Get(CancellationToken token = new())
     {
+        
         var list = await _mediator.Send(new GetAllSpecificationsQuery(), token);
         return Ok(list);
     }

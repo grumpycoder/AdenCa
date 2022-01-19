@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Aden.Application.Common.Behaviors;
+using Aden.Domain.Events;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

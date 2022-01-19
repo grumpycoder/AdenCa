@@ -12,12 +12,12 @@ public class Specification: DomainEntity
     public Specification(string fileNumber, string filename, ReportLevel reportLevel)
     {
         FileNumber = fileNumber;
-        Filename = filename;
+        FileName = filename;
         ReportLevel = reportLevel;
         IsRetired = false;
     }
     public string? FileNumber { get; private set; }
-    public string? Filename { get; private set; }
+    public string? FileName { get; private set; }
     public ReportLevel? ReportLevel { get; private set; }
 
     public string? Section { get; private set; }
@@ -36,7 +36,7 @@ public class Specification: DomainEntity
 
     public void Rename(string fileNumber, string fileName)
     {
-        Filename = fileName;
+        FileName = fileName;
         FileNumber = fileNumber;
     }
 
@@ -61,7 +61,7 @@ public class Specification: DomainEntity
     {
         IsRetired = true;
         //TODO: Domain Event to cancel in progress work and notify
-        AddDomainEvents(new SpecificationRetired(){SpecificationId = Id});
+        AddDomainEvents(new SpecificationWasRetired(Id, FileName, FileNumber));
     }
 
     public void Activate()
