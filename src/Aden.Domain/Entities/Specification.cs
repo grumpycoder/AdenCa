@@ -67,7 +67,8 @@ public class Specification: DomainEntity
     public void Activate()
     {
         IsRetired = false;
-        //TODO: What to do when activating? 
+        //TODO: What to do when activating?
+        AddDomainEvents(new SpecificationWasActivated(Id, FileName, FileNumber));
     }
 
     public void AddSubmission(Submission submission)
