@@ -13,20 +13,21 @@ builder.Services.AddMvcDependencyInjection();
 
 builder.Services.AddSwaggerGen(c =>
 {
+    c.CustomSchemaIds(type => type.FullName);
+    
     c.EnableAnnotations();
     c.OperationFilter<SwaggerDefaultValues>();
     c.ResolveConflictingActions(actions => actions.First());
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-    {
-        Description =
-            "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT"
-    });
+    // c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    // {
+    //     Description =
+    //         "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+    //     Name = "Authorization",
+    //     In = ParameterLocation.Header,
+    //     Type = SecuritySchemeType.Http,
+    //     Scheme = "Bearer",
+    //     BearerFormat = "JWT"
+    // });
 });
 
 

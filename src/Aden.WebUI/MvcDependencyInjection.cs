@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Aden.Application.Submission.Commands.CreateSubmission;
+using Aden.Application.Submission.Commands;
 using Aden.WebUI.Filters;
 using DateOnlyTimeOnly.AspNet.Converters;
 using FluentValidation.AspNetCore;
@@ -16,7 +16,7 @@ public static class MvcDependencyInjection
             .AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation(x =>
-                x.RegisterValidatorsFromAssemblyContaining<CreateSubmissionCommand>()
+                x.RegisterValidatorsFromAssemblyContaining<CreateSubmission.Command>()
             )
             .AddJsonOptions(
                 options =>
@@ -59,20 +59,3 @@ public static class MvcDependencyInjection
         return services;
     }
 }
-
-// public class ModelStateValidator
-// {
-//     public static IActionResult ValidateModelState(ActionContext context)
-//     {
-//         (string fieldName, ModelStateEntry entry) = context.ModelState
-//             .First(x => x.Value.Errors.Count > 0);
-//         string errorSerialized = entry.Errors.First().ErrorMessage;
-//
-//         // Error error = Error.Deserialize(errorSerialized);
-//         // Envelope envelope = Envelope.Error(error, fieldName);
-//         // var result = new BadRequestObjectResult(envelope);
-//         var result = new BadRequestObjectResult("Custom Error");
-//
-//         return result;
-//     }
-// }
