@@ -71,7 +71,8 @@ public static class CreateSpecification
                 .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
                 //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
                 .Must(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
-        }
+            
+       }
 
         private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
         {

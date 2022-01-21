@@ -3,7 +3,7 @@ using Aden.SharedKernal;
 
 namespace Aden.Domain.Entities;
 
-public class Specification: DomainEntity
+public class Specification : DomainEntity
 {
     private Specification()
     {
@@ -16,6 +16,7 @@ public class Specification: DomainEntity
         ReportLevel = reportLevel;
         IsRetired = false;
     }
+
     public string? FileNumber { get; private set; }
     public string? FileName { get; private set; }
     public ReportLevel? ReportLevel { get; private set; }
@@ -53,13 +54,15 @@ public class Specification: DomainEntity
         Application = application;
         SupportGroup = supportGroup;
         Collection = collection;
-        Section = section; 
+        Section = section;
         SpecificationUrl = specificationUrl;
     }
 
     public void Retire()
     {
         IsRetired = true;
+        _submissions.RemoveAll(s => s.SubmissionState < SubmissionState.CompleteWithError);
+
         //TODO: Domain Event to cancel in progress work and notify
         AddDomainEvents(new SpecificationWasRetired(Id, FileName, FileNumber));
     }

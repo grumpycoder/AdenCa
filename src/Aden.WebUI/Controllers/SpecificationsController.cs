@@ -1,7 +1,7 @@
 ﻿using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 using Aden.Application.FileSpecification.Queries;
 using Aden.Application.Specification.Commands;
-using Aden.Application.Submission.Commands.CreateSubmission;
+using Aden.Application.Submission.Commands;
 using Aden.Domain.Events;
 using Aden.Infrastructure.Persistence;
 using MediatR;
@@ -74,12 +74,5 @@ public class SpecificationsController : ControllerBase
         var result = await _mediator.Send(new ActivateSpecificationCommand(id));
         return Ok(result);
     }
-    
-    [HttpPost]
-    [Route("{id:int}/submission")]
-    public async Task<ActionResult> AddSubmission([FromRoute]int id, CreateSubmissionCommand command, CancellationToken token = new())
-    {
-        var entity = await _mediator.Send(command, token);
-        return Ok(entity);
-    }
+ 
 }

@@ -1,4 +1,6 @@
 ﻿using Aden.Application.FileSpecification.Queries;
+using Aden.Application.Specification.Commands;
+using Aden.Application.Submission.Commands;
 using Aden.Application.Submission.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aden.WebUI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]", Name = "Submissions")]
 public class SubmissionsController: ControllerBase
 {
     private readonly ILogger<SubmissionsController> _logger;
@@ -45,7 +47,15 @@ public class SubmissionsController: ControllerBase
     [Route("{id:int}/cancel")]
     public async Task<ActionResult> CancelSubmission([FromRoute] int id, CancellationToken token = new())
     {
-        
         return Ok();
     }
+  
+    [HttpPost]
+    [Route("")]
+    public async Task<ActionResult> Post([FromBody]CreateSubmission.Command command)
+    {
+        var entity = await _mediator.Send(command);
+        return Ok(entity);
+    }
+    
 }

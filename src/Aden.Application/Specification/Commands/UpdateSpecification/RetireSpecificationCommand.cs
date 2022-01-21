@@ -2,6 +2,7 @@ using Aden.Application.Common.Exceptions;
 using Aden.Infrastructure.Persistence;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
 
@@ -26,7 +27,9 @@ public class RetireSpecificationCommandHandler: IRequestHandler<RetireSpecificat
     
     public async Task<Unit> Handle(RetireSpecificationCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Specifications.FindAsync(request.Id);
+        var entity = await _context.Specifications
+            .Include(s => s.Submissions)
+            .FirstAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
         if (entity == null) throw new NotFoundException(nameof(FileSpecification), request.Id);
 
