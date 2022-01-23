@@ -14,51 +14,33 @@ public static class UpdateSpecification
     {
     }
 
-    // public class Validator: AbstractValidator<Command>
-    // {
-        //TODO: Refactor Validator
-        // private readonly ApplicationDbContext _context;
-        //
-        // public Validator(ApplicationDbContext context)
-        // {
-        //     _context = context;
-        //
-        //     RuleFor(v => v.FileName)
-        //         .NotEmpty().WithMessage("File name is required.")
-        //         .MaximumLength(250).WithMessage("File name must not exceed 250 characters.");
-        //
-        //     RuleFor(v => v.FileNumber)
-        //         .NotEmpty().WithMessage("File Number is required.")
-        //         .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
-        //         .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
-        //         //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.")
-        //         //.Must(BeUniqueFileNumber).WithMessage("The specified file number already exists")
-        //         .Must((model, fileNumber) => BeUniqueFileNumber(model.Id, fileNumber)).WithMessage($"The specified file number already exists");
-        // }
-        //
-        // private bool BeUniqueFileNumber(int id, string fileNumber)
-        // {
-        //     return _context.Specifications.Any(x => x.FileNumber == fileNumber && x.Id == id) || _context.Specifications.All(l => l.FileNumber != fileNumber);
-        // }
-    
-        // private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
-        // {
-        //     return await _context.FileSpecifications
-        //         .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
-        // }
-        //
-        // private bool BeUniqueFileNumber(string fileNumber)
-        // {
-        //     return  _context.FileSpecifications
-        //         .All(l => l.FileNumber != fileNumber);
-        // }
-        //
-        // private bool BeUniqueFileNumber2(string fileNumber, int id)
-        // {
-        //     return  _context.FileSpecifications
-        //         .All(l => l.FileNumber != fileNumber);
-        // }
-    // }
+     public class Validator: AbstractValidator<Command>
+     {
+         private readonly IUnitOfWork _uow;
+        
+         public Validator(IUnitOfWork uow)
+         {
+             _uow = uow;
+        
+             RuleFor(v => v.FileName)
+                 .NotEmpty().WithMessage("File name is required.")
+                 .MaximumLength(250).WithMessage("File name must not exceed 250 characters.");
+        
+             RuleFor(v => v.FileNumber)
+                 .NotEmpty().WithMessage("File Number is required.")
+                 .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
+                 .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
+                 //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.")
+                 //.Must(BeUniqueFileNumber).WithMessage("The specified file number already exists")
+                 .Must((model, fileNumber) => BeUniqueFileNumber(model.Id, fileNumber)).WithMessage($"The specified file number already exists");
+         }
+        
+         private bool BeUniqueFileNumber(int id, string fileNumber)
+         {
+             return  _uow.Specifications.GetUniqueFileNumbers(id, fileNumber);
+         }
+         
+     }
     
     public class Handler : IRequestHandler<Command>
     {

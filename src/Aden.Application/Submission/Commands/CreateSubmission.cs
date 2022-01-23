@@ -28,8 +28,7 @@ public static class CreateSubmission
 
             specification.AddSubmission(submission);
 
-            //TODO: Save Changes
-            //await _context.SaveChangesAsync(cancellationToken);
+            _uow.Complete(); 
 
             return new Response()
             {
@@ -41,35 +40,32 @@ public static class CreateSubmission
         }
     }
 
-    // public class Validator : AbstractValidator<Command>
-    // {
-        //TODO: Refactor Validator
-        // private readonly ApplicationDbContext _context;
-        //
-        // public Validator(ApplicationDbContext context)
-        // {
-        //     _context = context;
-        //     RuleFor(v => v.DataYear)
-        //         .NotEmpty().WithMessage("Data Year is required")
-        //         .GreaterThan(2000)
-        //         .Must((model, dataYear) => BeUniqueDataYear(model.SpecificationId, dataYear))
-        //         .WithMessage("Submission with Data year already exists.")
-        //         .GreaterThanOrEqualTo(x => x.DueDate.Year).WithMessage("Data Year must be less than or equal to Due Date year");
-        //
-        //     RuleFor(v => v.DueDate)
-        //         .NotEmpty().WithMessage("Due Date is required")
-        //         .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
-        //         .WithMessage($"The specified Due Date cannot be in the past.")
-        //         //.GreaterThanOrEqualTo(x => x.DueDate.Year)
-        //         ;
-        // }
-        //
-        // private bool BeUniqueDataYear(int specificationId, int dataYear)
-        // {
-        //     var specification = _context.SpecificationWithSubmissions(specificationId).Result;
-        //     return specification.Submissions.All(x => x.DataYear != dataYear);
-        // }
-    // }
+     public class Validator : AbstractValidator<Command>
+     {
+         private readonly IUnitOfWork _uow;
+        
+         public Validator(IUnitOfWork uow)
+         {
+             _uow = uow;
+             RuleFor(v => v.DataYear)
+                 .NotEmpty().WithMessage("Data Year is required")
+                 .GreaterThan(2000)
+                 .Must((model, dataYear) => BeUniqueDataYear(model.SpecificationId, dataYear))
+                 .WithMessage("Submission with Data year already exists.")
+                 .GreaterThanOrEqualTo(x => x.DueDate.Year).WithMessage("Data Year must be less than or equal to Due Date year");
+        
+             RuleFor(v => v.DueDate)
+                 .NotEmpty().WithMessage("Due Date is required")
+                 .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
+                 .WithMessage($"The specified Due Date cannot be in the past.");
+         }
+        
+         private bool BeUniqueDataYear(int specificationId, int dataYear)
+         {
+             var specification = _uow.Specifications.GetSpecificationWithSubmissions((specificationId)).Result;
+             return specification.Submissions.All(x => x.DataYear != dataYear);
+         }
+     }
 
     public class Response
     {

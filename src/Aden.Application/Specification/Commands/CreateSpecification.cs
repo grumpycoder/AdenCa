@@ -53,40 +53,32 @@ public static class CreateSpecification
         }
     }
 
-    // public class Validator: AbstractValidator<Command>
-    // {
-        //TODO: Refactor Validator
-       //  private readonly ApplicationDbContext _context;
-       //
-       //  public Validator(ApplicationDbContext context)
-       //  {
-       //      _context = context;
-       //
-       //      RuleFor(v => v.Filename)
-       //          .NotEmpty().WithMessage("File name is required.")
-       //          .MaximumLength(250).WithMessage("File name must not exceed 250 characters.");
-       //  
-       //      RuleFor(v => v.FileNumber)
-       //          .NotEmpty().WithMessage("File Number is required.")
-       //          .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
-       //          .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
-       //          //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
-       //          .Must(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
-       //      
-       // }
-
-        // private async Task<bool> BeUniqueFileNumber(string fileNumber, CancellationToken cancellationToken)
-        // {
-        //     return await _context.Specifications
-        //         .AllAsync(l => l.FileNumber != fileNumber, cancellationToken);
-        // }
-    
-        // private bool BeUniqueFileNumber(string fileNumber)
-        // {
-        //     return  _context.Specifications
-        //         .All(l => l.FileNumber != fileNumber);
-        // }
-    // }
+     public class Validator: AbstractValidator<Command>
+     {
+         private readonly IUnitOfWork _uow;
+       
+         public Validator(IUnitOfWork uow)
+         {
+             _uow = uow;
+       
+             RuleFor(v => v.Filename)
+                 .NotEmpty().WithMessage("File name is required.")
+                 .MaximumLength(250).WithMessage("File name must not exceed 250 characters.");
+         
+             RuleFor(v => v.FileNumber)
+                 .NotEmpty().WithMessage("File Number is required.")
+                 .MaximumLength(3).WithMessage("File Number must not exceed 3 characters.")
+                 .MinimumLength(3).WithMessage("File Number must be at least 3 characters.")
+                 //.MustAsync(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
+                 .Must(BeUniqueFileNumber).WithMessage("The specified file number already exists.");
+             
+        }
+         
+         private bool BeUniqueFileNumber(string fileNumber)
+         {
+             return  _uow.Specifications.GetUniqueFileNumbers(fileNumber);
+         }
+     }
     
     public class Response
     {

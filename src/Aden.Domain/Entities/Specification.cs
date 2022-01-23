@@ -63,20 +63,20 @@ public class Specification : DomainEntity
         IsRetired = true;
         _submissions.RemoveAll(s => s.SubmissionState < SubmissionState.CompleteWithError);
 
-        //TODO: Domain Event to cancel in progress work and notify
+        //REVIEW: Domain Event to cancel in progress work and notify
         AddDomainEvents(new SpecificationWasRetired(Id, FileName, FileNumber));
     }
 
     public void Activate()
     {
         IsRetired = false;
-        //TODO: What to do when activating?
+        //REVIEW: What to do when activating?
         AddDomainEvents(new SpecificationWasActivated(Id, FileName, FileNumber));
     }
 
     public void AddSubmission(Submission submission)
     {
         _submissions.Add(submission);
-        //TODO: Domain Event to notify
+        //REVIEW: Domain Event to notify
     }
 }
