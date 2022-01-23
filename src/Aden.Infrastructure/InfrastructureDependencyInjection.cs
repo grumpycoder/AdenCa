@@ -1,4 +1,6 @@
-﻿using Aden.Infrastructure.Persistence;
+﻿using Aden.Application.Interfaces;
+using Aden.Infrastructure.Persistence;
+using Aden.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        
         services.AddScoped<DomainEventDispatcher>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
@@ -19,7 +22,10 @@ public static class InfrastructureDependencyInjection
             )
         );
 
-
+        services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+        services.AddScoped<ISpecificationRepository, SpecificationRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+        
         return services;
     }
 }

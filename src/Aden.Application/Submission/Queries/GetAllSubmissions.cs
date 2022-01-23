@@ -1,7 +1,6 @@
+using Aden.Application.Interfaces;
 using Aden.Domain.Entities;
-using Aden.Infrastructure.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Aden.Application.Submission.Queries;
 
@@ -11,19 +10,17 @@ public static class GetAllSubmissions
 
     public class Handler : IRequestHandler<Query, List<Response>>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _uow;
 
-        public Handler(ApplicationDbContext context)
+        public Handler(IUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         public async Task<List<Response>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var list = await _context.Submissions
-                .Include(x => x.Specification)
-                .ToListAsync(cancellationToken);
-
+            var list = await _uow.Submissions.All(); 
+            
             var response = new List<Response>();
             foreach (var entity in list)
             {

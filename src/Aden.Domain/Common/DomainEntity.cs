@@ -1,4 +1,6 @@
-namespace Aden.SharedKernal;
+using Aden.Domain.Interfaces;
+
+namespace Aden.Domain.Common;
 
 public abstract class DomainEntity
 {

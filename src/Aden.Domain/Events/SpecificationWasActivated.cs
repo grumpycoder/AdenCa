@@ -1,4 +1,4 @@
-using Aden.SharedKernal;
+using Aden.Domain.Interfaces;
 
 namespace Aden.Domain.Events;
 

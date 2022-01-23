@@ -1,7 +1,6 @@
 using Aden.Application.Common.Exceptions;
-using Aden.Domain;
+using Aden.Application.Interfaces;
 using Aden.Domain.Entities;
-using Aden.Infrastructure.Persistence;
 using MediatR;
 
 namespace Aden.Application.Submission.Queries;
@@ -12,16 +11,16 @@ public static class GetSubmissionById
     
     public class Handler: IRequestHandler<Query, Response>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _uow;
 
-        public Handler(ApplicationDbContext context)
+        public Handler(IUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
         public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
         {
-            var entity = await _context.SubmissionsWithSpecification(request.Id);
-        
+            var entity = await _uow.Submissions.GetSubmissionWithSpecification(request.Id); 
+            
             if (entity == null) throw new NotFoundException(nameof(Submission), request.Id);
 
             return new Response()

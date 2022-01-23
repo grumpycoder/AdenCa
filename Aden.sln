@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aden.Domain", "src\Aden.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aden.Infrastructure", "src\Aden.Infrastructure\Aden.Infrastructure.csproj", "{AE2747D7-4434-4DC2-BAEB-DBEFD8EA99B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aden.SharedKernal", "src\Aden.SharedKernal\Aden.SharedKernal.csproj", "{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,7 +20,6 @@ Global
 		{63D66623-B01D-460D-A569-9009A70BC459} = {7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}
 		{6AC0BF38-61D4-482F-B6A1-20B312CE9E71} = {7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}
 		{AE2747D7-4434-4DC2-BAEB-DBEFD8EA99B9} = {7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}
-		{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379} = {7C6CA9F8-7154-464F-B60A-B7C38E63BFF5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0798A024-0E63-4093-8868-C56F157930B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -41,9 +38,5 @@ Global
 		{AE2747D7-4434-4DC2-BAEB-DBEFD8EA99B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE2747D7-4434-4DC2-BAEB-DBEFD8EA99B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE2747D7-4434-4DC2-BAEB-DBEFD8EA99B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2F83B1F-E1F1-4A92-AC0F-C2E6809D9379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

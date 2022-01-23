@@ -1,5 +1,5 @@
-﻿using Aden.Domain.Events;
-using Aden.SharedKernal;
+﻿using Aden.Domain.Common;
+using Aden.Domain.Events;
 
 namespace Aden.Domain.Entities;
 

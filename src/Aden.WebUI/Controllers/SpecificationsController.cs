@@ -1,9 +1,5 @@
-﻿using Aden.Application.FileSpecification.Commands.UpdateFileSpecification;
-using Aden.Application.FileSpecification.Queries;
-using Aden.Application.Specification.Commands;
-using Aden.Application.Submission.Commands;
-using Aden.Domain.Events;
-using Aden.Infrastructure.Persistence;
+﻿using Aden.Application.Specification.Commands;
+using Aden.Application.Specification.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,25 +9,18 @@ namespace Aden.WebUI.Controllers;
 [Route("api/[controller]", Name = "Specifications")]
 public class SpecificationsController : ControllerBase
 {
-    private readonly ILogger<SpecificationsController> _logger;
-    private readonly ApplicationDbContext _context;
     private readonly IMediator _mediator;
 
-    public SpecificationsController(ILogger<SpecificationsController> logger, ApplicationDbContext context,
-        IMediator mediator)
+    public SpecificationsController(IMediator mediator)
     {
-        _logger = logger;
-        _context = context;
         _mediator = mediator;
     }
 
     [HttpGet]
     [Route("{id:int}", Name = nameof(GetFileSpecificationById))]
     public async Task<ActionResult> GetFileSpecificationById([FromRoute] int id, CancellationToken token = new())
-    {
-        _mediator.Publish(new SampleEvent("Hello from mediator event")); 
-        
-        var entity = await _mediator.Send(new GetSpecificationByIdQuery(id), token);
+    { 
+        var entity = await _mediator.Send(new GetSpecificationById.Query(id), token);
         return Ok(entity);
     }
 
@@ -40,7 +29,7 @@ public class SpecificationsController : ControllerBase
     public async Task<ActionResult> Get(CancellationToken token = new())
     {
         
-        var list = await _mediator.Send(new GetAllSpecificationsQuery(), token);
+        var list = await _mediator.Send(new GetAllSpecifications.Query(), token);
         return Ok(list);
     }
     
@@ -53,7 +42,7 @@ public class SpecificationsController : ControllerBase
     }
     
     [HttpPut]
-    public async Task<ActionResult> Put(UpdateSpecificationCommand command)
+    public async Task<ActionResult> Put(UpdateSpecification.Command command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
@@ -63,7 +52,7 @@ public class SpecificationsController : ControllerBase
     [Route("retire/{id:int}")]
     public async Task<ActionResult> Retire([FromRoute] int id)
     {
-        var result = await _mediator.Send(new RetireSpecificationCommand(id));
+        var result = await _mediator.Send(new RetireSpecification.Command(id));
         return Ok(result);
     }
 
@@ -71,7 +60,7 @@ public class SpecificationsController : ControllerBase
     [Route("activate/{id:int}")]
     public async Task<ActionResult> Activate([FromRoute] int id)
     {
-        var result = await _mediator.Send(new ActivateSpecificationCommand(id));
+        var result = await _mediator.Send(new ActivateSpecification.Command(id));
         return Ok(result);
     }
  

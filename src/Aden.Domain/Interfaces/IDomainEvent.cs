@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Aden.SharedKernal;
+namespace Aden.Domain.Interfaces;
 
 public interface IDomainEvent: INotification
 {

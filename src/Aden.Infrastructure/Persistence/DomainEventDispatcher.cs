@@ -1,4 +1,4 @@
-using Aden.SharedKernal;
+using Aden.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;

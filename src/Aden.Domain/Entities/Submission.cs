@@ -1,4 +1,4 @@
-﻿using Aden.SharedKernal;
+﻿using Aden.Domain.Common;
 
 namespace Aden.Domain.Entities;
 
