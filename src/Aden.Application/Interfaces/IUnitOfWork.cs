@@ -5,4 +5,5 @@ public interface IUnitOfWork : IDisposable
     ISpecificationRepository Specifications { get; }
     ISubmissionRepository Submissions { get; }
     int Complete();
+    Task<int> CompleteAsync();
 }

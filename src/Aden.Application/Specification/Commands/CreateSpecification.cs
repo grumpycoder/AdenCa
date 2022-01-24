@@ -31,7 +31,7 @@ public static class CreateSpecification
             entity.UpdateReportProcessDetail(reportLevel, request.FilenameFormat, request.ReportAction);
         
             _uow.Specifications.Add(entity);
-            _uow.Complete();
+            await _uow.CompleteAsync();
         
             return new Response()
             {
